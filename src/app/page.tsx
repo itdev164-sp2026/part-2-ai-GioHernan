@@ -1,75 +1,71 @@
-import { Code, Cpu, Layout, Rocket, Server, ShieldCheck } from "lucide-react";
+import {
+  Braces,
+  Database,
+  FileCode2,
+  GitBranch,
+  Paintbrush2,
+  Cpu,
+} from "lucide-react";
 
-const assignments = [
+const skills = [
   {
-    week: 1,
-    title: "Setup & Next.js Scaffolding",
-    description: "Initialize your project, configure tooling, and verify your AI-assisted workflow.",
-    icon: Rocket,
+    name: "CSS",
+    icon: Paintbrush2,
   },
   {
-    week: 2,
-    title: "Agentic UI with Shadcn",
-    description: "Build dashboard layouts and reusable components with Shadcn/ui and Tailwind.",
-    icon: Layout,
+    name: "HTML",
+    icon: FileCode2,
   },
   {
-    week: 3,
-    title: "Server Components & Data Fetching",
-    description: "Leverage React Server Components and async data patterns in the App Router.",
-    icon: Server,
+    name: "JavaScript",
+    icon: Braces,
   },
   {
-    week: 4,
-    title: "AI-Driven Forms & Validation",
-    description: "Create forms with Zod schemas and Server Actions for type-safe data handling.",
-    icon: Code,
+    name: "Git",
+    icon: GitBranch,
   },
   {
-    week: 5,
-    title: "Full-Stack Integration",
-    description: "Connect Supabase for authentication, database operations, and real-time data.",
+    name: "SQL",
+    icon: Database,
+  },
+  {
+    name: "C++",
     icon: Cpu,
-  },
-  {
-    week: 6,
-    title: "Deployment & AI Testing",
-    description: "Deploy to Vercel, set up webhooks, and write AI-assisted tests.",
-    icon: ShieldCheck,
   },
 ];
 
 export default function HomePage() {
   return (
-    <div className="space-y-8">
-      <section className="space-y-2">
-        <h1 className="text-3xl font-bold tracking-tight">
-          Course Dashboard
-        </h1>
-        <p className="text-muted-foreground">
-          ITDEV-164 — Web Programming 2: AI-native full-stack development with
-          Next.js, Tailwind&nbsp;CSS, and Supabase.
+    <div className="space-y-10">
+      <section className="space-y-3">
+        <p className="text-sm font-medium tracking-wider text-muted-foreground uppercase">
+          Developer Profile
+        </p>
+        <h1 className="text-4xl font-bold tracking-tight">Marco Giovanni Flores Hernandez</h1>
+        <p className="max-w-2xl text-muted-foreground">
+          I am a web development student focused on building clean,
+          responsive, and user-friendly websites. I enjoy learning modern
+          tools and turning ideas into practical full-stack applications.
         </p>
       </section>
 
-      <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {assignments.map(({ week, title, description, icon: Icon }) => (
+      <section className="space-y-4">
+        <h2 className="text-2xl font-semibold tracking-tight">Skills</h2>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {skills.map(({ name, icon: Icon }) => (
           <div
-            key={week}
+            key={name}
             className="group rounded-lg border border-border bg-card p-5 transition-colors hover:border-primary/40"
           >
-            <div className="mb-3 flex items-center gap-3">
+            <div className="flex items-center gap-3">
               <div className="flex h-9 w-9 items-center justify-center rounded-md bg-muted">
                 <Icon className="h-5 w-5 text-muted-foreground transition-colors group-hover:text-primary" />
               </div>
-              <span className="text-xs font-medium tracking-wider text-muted-foreground uppercase">
-                Week {week}
-              </span>
+              <p className="font-medium">{name}</p>
             </div>
-            <h2 className="mb-1 font-semibold leading-snug">{title}</h2>
-            <p className="text-sm text-muted-foreground">{description}</p>
           </div>
-        ))}
+          ))}
+        </div>
       </section>
     </div>
   );
