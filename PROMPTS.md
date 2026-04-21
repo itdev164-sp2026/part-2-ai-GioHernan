@@ -79,3 +79,51 @@ Overall, everything works as expected and the Agent followed all the instruction
 I didn't see agent overwriting anything related to Activity 1. The Changes that he made were mainly focused on today's activity. However, I was still checking that nothing got changed.
 Besides of that, I didn't have to use the revert button.
 I learned that giving the right commands and being specific as to what files are you lookingto get changed, the agent will do the work. Also, I like the fact that he also explains the process that he does in order to make the changes.
+
+## Activity 3: Server-Side Data with Supabase
+
+### Prompt 1
+
+**What I asked:**
+
+> I will quickly verify the current Projects page and Card component files so I can confirm each checklist item against what is actually in your workspace.
+
+**What happened:**
+
+> Copilot checked the Projects page and confirmed that it was using the correct async Server Component pattern. It said the page exported an async component and fetched data with await directly in src/app/projects/page.tsx. It also confirmed there was no "use client", and that there was no useEffect or useState being used for data fetching.
+
+>I also asked about the card component requirement. Copilot explained that it could not fully use the shadcn CLI the normal way because the CLI opened an interactive setup instead of directly adding the component. So it manually added a shadcn-style Card component and used it in the projects page.
+
+>I also asked whether there would be a problem if the code did not look exactly like the example. 
+
+>Copilot said that was not a problem because that snippet was just the minimal pattern, and my code still followed the correct Server Component approach.
+
+>So basically, it made the page as a Server Component, used async/await, and did not use the old client-side useEffect style. I did not have to correct that part, which was honestly nice for once.
+
+### Prompt 2
+
+**What I asked:**
+
+> I can fix that by restoring toggle behavior: I will re-enable a collapsible sidebar on desktop and bring back the top-left trigger so it also works as the burger button on mobile.
+
+**What happened:**
+
+> Copilot found the reason the sidebar controls disappeared. It said the sidebar had been set to non-collapsible and the trigger button had been removed from the header. Then it updated two files to fix it:
+
+>src/components/app-sidebar.tsx
+>src/app/layout.tsx
+
+>It restored the collapsible sidebar, added the trigger button back, and explained that:
+
+>on desktop, the button hides and shows the sidebar
+>on mobile, the same button works as the burger menu
+
+>It also mentioned there was one unrelated TypeScript warning, but that it was not caused by the sidebar fix.
+
+>From that exchange, I learned that Copilot was pretty decent at explaining what it changed and why. It did not just throw code at me. It actually told me what broke, what files it changed, and what I should test after. That made it easier to follow along instead of just hoping the fix worked.
+
+### Reflection
+
+> Fetching data on the server feels a lot different from the useEffect pattern I used in Web Programming 1. With useEffect, I had to make a client component, set up useState, load the data after render, and usually deal with loading states and extra boilerplate. With the App Router server-side approach, the page can just be async and fetch the data directly before rendering, which feels way cleaner.
+
+>One big advantage I noticed is that the code is simpler. There is less setup, less repeated logic, and it is easier to read. Another advantage is that the page is already rendered with data instead of waiting for the browser to fetch it after the page loads. That just feels more modern and less clunky.

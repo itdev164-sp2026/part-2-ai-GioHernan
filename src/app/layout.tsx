@@ -3,8 +3,9 @@ import type { Viewport } from "next";
 import { Inter, Geist } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { AppSidebar } from "@/components/app-sidebar";
-import { DashboardTopbar } from "@/components/dashboard-topbar";
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { BreadcrumbNav } from "@/components/breadcrumb-nav";
+import { Separator } from "@/components/ui/separator";
+import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import "./globals.css";
 import { cn } from "@/lib/utils";
@@ -44,7 +45,13 @@ export default function RootLayout({
             <SidebarProvider defaultOpen>
               <AppSidebar />
               <SidebarInset>
-                <DashboardTopbar />
+                <header className="sticky top-0 z-20 border-b border-border/60 bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/75">
+                  <div className="flex h-16 items-center gap-3 px-4 sm:px-6 lg:px-8">
+                    <SidebarTrigger />
+                    <Separator orientation="vertical" className="h-6" />
+                    <BreadcrumbNav />
+                  </div>
+                </header>
                 <div className="flex-1 px-4 pb-6 sm:px-6 lg:px-8 lg:pb-8">
                   <div className="mx-auto flex w-full max-w-6xl flex-col gap-6">
                     {children}
