@@ -5,15 +5,15 @@
 ### Prompt 1
 **What I asked:**
 > Look at the existing src/app/page.tsx and src/app/layout.tsx in this project.
-Replace the current homepage content with a "Developer Profile" page for me.
-It should include:
+>Replace the current homepage content with a "Developer Profile" page for me.
+>It should include:
 
-My name: [Your Name]
-A short bio (1-2 sentences about being a web development student)
-A "Skills" section that displays at least 6 skills in a responsive
-Tailwind CSS grid (use cards with icons from lucide-react)
-Keep the existing Header component and layout structure intact.
-If you need to create new components, go ahead and create them in
+>My name: [Your Name]
+>A short bio (1-2 sentences about being a web development student)
+>A "Skills" section that displays at least 6 skills in a responsive
+>Tailwind CSS grid (use cards with icons from lucide-react)
+>Keep the existing Header component and layout structure intact.
+>If you need to create new components, go ahead and create them in
 the src/components/ folder.
 
 
@@ -43,32 +43,32 @@ Skills: CSS,HTML,Javascript, Git, SQl, C++
 **What happened:**
 > The Agent handled the task step by step. First, it checked my existing layout and components to understand the project. Then it created the sidebar and connected it to the layout. It also added navigation links using icons from lucide-react and built a top navigation area with breadcrumbs.
 
-It updated layout.tsx to use the new sidebar system and wrapped the existing page content inside the main content area. My Developer Profile from Activity 1 was still there, which means it followed the instruction to preserve it. The dark mode toggle also continued to work.
+>It updated layout.tsx to use the new sidebar system and wrapped the existing page content inside the main content area. My Developer >Profile from Activity 1 was still there, which means it followed the instruction to preserve it. The dark mode toggle also continued to work.
 
-Overall, the Agent worked carefully and made changes across multiple files without breaking the app.
+>Overall, the Agent worked carefully and made changes across multiple files without breaking the app.
 
 ### Prompt 2
 **What I asked:**
 > Does the sidebar use the Shadcn Sidebar components (not a custom div)?
-Are the icons imported from lucide-react?
-Is the Developer Profile content still intact?
-Does the layout use SidebarProvider and SidebarInset correctly?
+>Are the icons imported from lucide-react?
+>Is the Developer Profile content still intact?
+>Does the layout use SidebarProvider and SidebarInset correctly?
 
 
-Are these met after you made adjustemenets to the files?
+>Are these met after you made adjustemenets to the files?
 
 **What happened:**
 > Yes, all the requirements were met after the Agent made changes.
 
-The sidebar is built using the Shadcn components from shadcn/ui, not just a custom div. It uses the proper sidebar structure like Sidebar and SidebarMenu.
+>The sidebar is built using the Shadcn components from shadcn/ui, not just a custom div. It uses the proper sidebar structure like Sidebar and SidebarMenu.
 
-The icons are correctly imported from lucide-react and used for the navigation links.
+>The icons are correctly imported from lucide-react and used for the navigation links.
 
-My Developer Profile content from Activity 1 is still intact in page.tsx, so nothing important was deleted or overwritten.
+>My Developer Profile content from Activity 1 is still intact in page.tsx, so nothing important was deleted or overwritten.
 
-The layout also correctly uses SidebarProvider and SidebarInset, which means the sidebar and main content are connected properly.
+>The layout also correctly uses SidebarProvider and SidebarInset, which means the sidebar and main content are connected properly.
 
-Overall, everything works as expected and the Agent followed all the instructions correctly.
+>Overall, everything works as expected and the Agent followed all the instructions correctly.
 
 ### Reflection
 > Did the Agent accidentally delete or overwrite any of your Activity 1
@@ -76,9 +76,9 @@ Overall, everything works as expected and the Agent followed all the instruction
 > "Revert" button — did you use it?) What did you learn about giving
 > the Agent context about existing code you want to preserve?
 
-I didn't see agent overwriting anything related to Activity 1. The Changes that he made were mainly focused on today's activity. However, I was still checking that nothing got changed.
-Besides of that, I didn't have to use the revert button.
-I learned that giving the right commands and being specific as to what files are you lookingto get changed, the agent will do the work. Also, I like the fact that he also explains the process that he does in order to make the changes.
+>I didn't see agent overwriting anything related to Activity 1. The Changes that he made were mainly focused on today's activity. However, I was still checking that nothing got changed.
+>Besides of that, I didn't have to use the revert button.
+>I learned that giving the right commands and being specific as to what files are you lookingto get changed, the agent will do the work. Also, I like the fact that he also explains the process that he does in order to make the changes.
 
 ## Activity 3: Server-Side Data with Supabase
 
@@ -127,3 +127,44 @@ I learned that giving the right commands and being specific as to what files are
 > Fetching data on the server feels a lot different from the useEffect pattern I used in Web Programming 1. With useEffect, I had to make a client component, set up useState, load the data after render, and usually deal with loading states and extra boilerplate. With the App Router server-side approach, the page can just be async and fetch the data directly before rendering, which feels way cleaner.
 
 >One big advantage I noticed is that the code is simpler. There is less setup, less repeated logic, and it is easier to read. Another advantage is that the page is already rendered with data instead of waiting for the browser to fetch it after the page loads. That just feels more modern and less clunky.
+
+
+## Activity 4: AI-Driven Forms & Validation
+
+### Prompt 1
+
+**What I asked:**
+
+> Create a Zod validation schema in a new file src/lib/schemas.ts for a “Project” with the fields title, description, and status. The title needed a minimum of 3 characters, the description needed a minimum of 10 characters, and status had to be an enum with "Planning", "Active", and "Completed". I also asked Copilot to export both the schema and the inferred TypeScript type using z.infer.
+
+**What happened:**
+
+> Copilot created the schema correctly in src/lib/schemas.ts. It used named exports, created projectSchema, added the custom error messages, and exported the inferred Project type using z.infer<typeof projectSchema>.
+
+### Prompt 2
+
+**What I asked:**
+
+> Using the Zod schema from src/lib/schemas.ts, create a professional project form component, a Server Action, and a new page. The form needed to use react-hook-form, the Zod resolver, shadcn/ui components, inline errors, and toast notifications. The Server Action needed "use server", server-side Zod validation, and a Supabase insert into the projects table. The new page needed to render the form at src/app/projects/new/page.tsx.
+
+**What happened:**
+
+> Copilot created and modified several files, including src/components/project-form.tsx, src/app/actions.ts, and src/app/projects/new/page.tsx. It also added supporting UI files like form.tsx, textarea.tsx, label.tsx, and sonner.tsx. The form was connected to the Server Action correctly, used client-side Zod validation, displayed inline errors, and showed toast messages. The Server Action also re-validated the data with projectSchema.safeParse() before inserting into Supabase.
+
+### Prompt 3 (if applicable)
+
+**What I asked:**
+
+> I asked Copilot to help fix the error: new row violates row-level security policy for table "projects". I also asked how to add the Supabase service role key to .env.local.
+
+**What happened:**
+
+> Copilot found that the Server Action was still using the public Supabase client from src/lib/supabase.ts, which uses the public publishable key and is affected by Row Level Security. It updated src/app/actions.ts to use a server-only Supabase client with SUPABASE_SERVICE_ROLE_KEY. It also added the SUPABASE_SERVICE_ROLE_KEY= line to .env.local. After that, I needed to paste the real service role key, save the file, and restart the dev server.
+
+### Reflection
+
+> The Schema-First approach with Zod makes forms feel more organized because the validation rules are written in one central place first. Instead of writing separate rules for the frontend and backend, the same schema can be reused for the form and the Server Action. This helps keep the form data consistent.
+
+>It also helps prevent junk data from entering the database because the form validates the data before submission, and the Server Action validates it again before inserting into Supabase. This means even if someone bypasses the browser form, invalid data like a short title, short description, or wrong status value should still be rejected on the server.
+
+>In previous courses, I usually handled validation manually with conditional statements or only checked the form on the client side. With Zod, the rules are clearer, reusable, and tied directly to TypeScript types. If the schema changes, the inferred type updates automatically, which reduces mistakes between the form, server action, and database insert.

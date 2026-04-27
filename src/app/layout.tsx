@@ -4,6 +4,7 @@ import { Inter, Geist } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { AppSidebar } from "@/components/app-sidebar";
 import { BreadcrumbNav } from "@/components/breadcrumb-nav";
+import { Toaster } from "@/components/ui/sonner";
 import { Separator } from "@/components/ui/separator";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -60,6 +61,7 @@ export default function RootLayout({
               </SidebarInset>
             </SidebarProvider>
           </TooltipProvider>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
