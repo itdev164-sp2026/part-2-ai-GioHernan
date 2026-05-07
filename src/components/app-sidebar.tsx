@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FolderOpen, Home, Settings } from "lucide-react";
+import { FolderOpen, Home, LogOut, Settings } from "lucide-react";
 
 import {
   Sidebar,
@@ -19,6 +19,9 @@ import {
   SidebarSeparator,
 } from "@/components/ui/sidebar";
 import { ModeToggle } from "@/components/mode-toggle";
+import { Button } from "@/components/ui/button";
+import { signOutAction } from "@/app/actions";
+import type { AppUser } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 
 const navigationItems = [
@@ -39,11 +42,15 @@ const navigationItems = [
   },
 ];
 
-export function AppSidebar() {
+type AppSidebarProps = {
+  user: AppUser | null;
+};
+
+export function AppSidebar({ user }: AppSidebarProps) {
   const pathname = usePathname();
 
   return (
-    <Sidebar collapsible="icon" variant="inset">
+    <Sidebar collapsible="offcanvas" variant="inset">
       <SidebarHeader className="gap-3 p-4">
         <div className="space-y-1">
           <p className="text-xs font-medium uppercase tracking-[0.24em] text-sidebar-foreground/60">
@@ -87,16 +94,39 @@ export function AppSidebar() {
 
       <SidebarFooter className="gap-3 p-4">
         <SidebarSeparator />
-        <div className="flex items-center justify-between gap-3">
-          <div className="min-w-0">
-            <p className="text-xs font-medium uppercase tracking-[0.2em] text-sidebar-foreground/60">
-              Theme
-            </p>
-            <p className="text-sm text-sidebar-foreground/80">
-              Switch appearance
-            </p>
+        <div className="space-y-3">
+          {user ? (
+            <div className="space-y-2">
+              <div className="min-w-0">
+                <p className="text-xs font-medium uppercase tracking-[0.2em] text-sidebar-foreground/60">
+                  Signed in
+                </p>
+                <p className="truncate text-sm text-sidebar-foreground/80">
+                  {user.email ?? "Authenticated user"}
+                </p>
+              </div>
+              <form action={signOutAction}>
+                <Button
+                  type="submit"
+                  variant="outline"
+                  className="w-full justify-start gap-2 border-sidebar-border bg-sidebar-accent/30 text-sidebar-foreground hover:bg-sidebar-accent/50"
+                >
+                  <LogOut />
+                  Sign Out
+                </Button>
+              </form>
+            </div>
+          ) : null}
+
+          <div className="flex items-center justify-between gap-3">
+            <div className="min-w-0">
+              <p className="text-xs font-medium uppercase tracking-[0.2em] text-sidebar-foreground/60">
+                Theme
+              </p>
+              <p className="text-sm text-sidebar-foreground/80">Switch appearance</p>
+            </div>
+            <ModeToggle />
           </div>
-          <ModeToggle />
         </div>
       </SidebarFooter>
 
