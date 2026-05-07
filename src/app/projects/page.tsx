@@ -5,7 +5,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { supabase } from "@/lib/supabase";
+import { redirect } from "next/navigation";
+
+import { createServerSupabaseClient } from "@/lib/supabase/server";
 
 type Project = {
   id: number;
@@ -26,6 +28,15 @@ function getStatusBadgeClass(status: string | null) {
 }
 
 export default async function ProjectsPage() {
+  const supabase = await createServerSupabaseClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    redirect("/login");
+  }
+
   const { data: projects, error } = await supabase
     .from("projects")
     .select("id, title, description, status")

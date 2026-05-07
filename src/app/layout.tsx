@@ -2,14 +2,13 @@ import type { Metadata } from "next";
 import type { Viewport } from "next";
 import { Inter, Geist } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
-import { AppSidebar } from "@/components/app-sidebar";
-import { BreadcrumbNav } from "@/components/breadcrumb-nav";
+import { AppShell } from "@/components/app-shell";
 import { Toaster } from "@/components/ui/sonner";
-import { Separator } from "@/components/ui/separator";
-import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { createServerSupabaseClient } from "@/lib/supabase/server";
+import type { AppUser } from "@/lib/auth";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
@@ -28,11 +27,23 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const supabase = await createServerSupabaseClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const currentUser: AppUser | null = user
+    ? {
+        id: user.id,
+        email: user.email ?? null,
+      }
+    : null;
+
   return (
     <html lang="en" suppressHydrationWarning className={cn("font-sans", geist.variable)}>
       <body className={`${inter.variable} min-h-svh bg-background font-sans antialiased`}>
@@ -43,23 +54,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <TooltipProvider delayDuration={0}>
-            <SidebarProvider defaultOpen>
-              <AppSidebar />
-              <SidebarInset>
-                <header className="sticky top-0 z-20 border-b border-border/60 bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/75">
-                  <div className="flex h-16 items-center gap-3 px-4 sm:px-6 lg:px-8">
-                    <SidebarTrigger />
-                    <Separator orientation="vertical" className="h-6" />
-                    <BreadcrumbNav />
-                  </div>
-                </header>
-                <div className="flex-1 px-4 pb-6 sm:px-6 lg:px-8 lg:pb-8">
-                  <div className="mx-auto flex w-full max-w-6xl flex-col gap-6">
-                    {children}
-                  </div>
-                </div>
-              </SidebarInset>
-            </SidebarProvider>
+            <AppShell user={currentUser}>{children}</AppShell>
           </TooltipProvider>
           <Toaster />
         </ThemeProvider>

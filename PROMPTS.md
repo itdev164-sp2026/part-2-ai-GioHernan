@@ -168,3 +168,32 @@ Skills: CSS,HTML,Javascript, Git, SQl, C++
 >It also helps prevent junk data from entering the database because the form validates the data before submission, and the Server Action validates it again before inserting into Supabase. This means even if someone bypasses the browser form, invalid data like a short title, short description, or wrong status value should still be rejected on the server.
 
 >In previous courses, I usually handled validation manually with conditional statements or only checked the form on the client side. With Zod, the rules are clearer, reusable, and tied directly to TypeScript types. If the schema changes, the inferred type updates automatically, which reduces mistakes between the form, server action, and database insert.
+
+## Activity 5: Securing the App with Supabase Auth
+
+### Prompt 1
+
+**What I asked:**
+
+> I asked the Agent to replace the old browser-only Supabase setup with a full SSR-safe authentication flow using Supabase Auth. The request included creating middleware, adding login/sign-up and sign-out functionality, protecting the dashboard routes, switching to authenticated server-side clients, and updating project queries/actions so they worked with authenticated users and row-level security.
+
+**What happened:**
+
+> The Agent modified a large number of files across the app in one pass. It created new SSR-safe Supabase helper files, middleware utilities, and a new login route, while also updating the root layout, sidebar, server actions, and project query pages. It handled middleware, login/sign-up flow, sign out, protected routing, and authenticated data access together instead of treating them as separate features. It also removed the old browser-only Supabase client and rewired the app around cookie-aware authentication.
+### Prompt 2
+
+**What I asked:**
+
+> I followed up by asking the Agent to verify the middleware authentication logic and investigate inconsistent sidebar behavior between normal and incognito windows. I specifically wanted to confirm whether the middleware was using getSession() or the more secure getUser() flow, and then debug why the sidebar appeared differently across sessions.
+
+**What happened:**
+
+> The Agent checked the middleware implementation and confirmed it was already using supabase.auth.getUser() instead of getSession(), which is more secure because it validates the authenticated user with the server. Then it traced the sidebar issue to responsive breakpoint behavior and the sidebar collapse mode. It updated the sidebar from collapsible="icon" to an off-canvas collapse mode so collapsing the sidebar no longer compressed the dashboard content. From this I learned how middleware-based auth depends on verified user checks, and how UI behavior can vary because of responsive layouts and persisted sidebar state.
+
+### Reflection
+
+> The Agent handled the creation of middleware.ts surprisingly well. It created a dedicated middleware helper under the Supabase utilities and then wired the root middleware entrypoint to delegate to that helper instead of duplicating logic. I did not have to manually write the middleware myself, although the Agent did need to inspect the existing project structure and auth-related files first so it could patch them correctly.
+
+>What surprised me most was how many files had to change just to add authentication properly. It wasn’t only a login page — the root layout, sidebar, server actions, Supabase utilities, project pages, middleware, and route handling all needed updates so authentication state could flow consistently through the app.
+
+>Middleware-based auth feels much cleaner than checking login status inside every page component. Instead of repeating authentication logic across pages, the middleware protects routes globally before the page even loads. That makes the app easier to maintain and keeps unauthorized users from reaching protected routes at all, rather than redirecting them after rendering begins.
