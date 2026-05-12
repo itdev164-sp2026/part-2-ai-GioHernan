@@ -101,11 +101,11 @@ function FormControl({ children }: { children: React.ReactElement }) {
     ? `${formDescriptionId} ${formMessageId}`
     : formDescriptionId
 
-  return React.cloneElement(children, {
-    id: formItemId,
-    "aria-describedby": describedBy,
-    "aria-invalid": Boolean(error),
-  })
+  return React.cloneElement(children as React.ReactElement<any>, {
+  id: formItemId,
+  "aria-describedby": describedBy,
+  "aria-invalid": Boolean(error),
+})
 }
 
 function FormDescription({ className, ...props }: React.ComponentProps<"p">) {
