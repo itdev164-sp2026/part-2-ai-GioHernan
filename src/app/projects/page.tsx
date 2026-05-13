@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {
   Card,
   CardContent,
@@ -5,6 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { redirect } from "next/navigation";
 
 import { createServerSupabaseClient } from "@/lib/supabase/server";
@@ -44,14 +46,19 @@ export default async function ProjectsPage() {
 
   return (
     <div className="space-y-6">
-      <section className="space-y-3">
-        <p className="text-sm font-medium tracking-wider text-muted-foreground uppercase">
-          Projects
-        </p>
-        <h1 className="text-3xl font-semibold tracking-tight">Project Workspace</h1>
-        <p className="max-w-2xl text-muted-foreground">
-          Live project records from Supabase for coursework milestones and delivery tracking.
-        </p>
+      <section className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+        <div className="space-y-3">
+          <p className="text-sm font-medium tracking-wider text-muted-foreground uppercase">
+            Projects
+          </p>
+          <h1 className="text-3xl font-semibold tracking-tight">Project Workspace</h1>
+          <p className="max-w-2xl text-muted-foreground">
+            Live project records from Supabase for coursework milestones and delivery tracking.
+          </p>
+        </div>
+        <Button asChild>
+          <Link href="/projects/new">Create Project</Link>
+        </Button>
       </section>
 
       {error ? (
