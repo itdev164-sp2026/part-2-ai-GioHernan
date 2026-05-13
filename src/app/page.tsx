@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import {
   Braces,
   Database,
@@ -6,6 +7,8 @@ import {
   Paintbrush2,
   Cpu,
 } from "lucide-react";
+
+import { createServerSupabaseClient } from "@/lib/supabase/server";
 
 const skills = [
   {
@@ -34,7 +37,16 @@ const skills = [
   },
 ];
 
-export default function HomePage() {
+export default async function HomePage() {
+  const supabase = await createServerSupabaseClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    redirect("/login");
+  }
+
   return (
     <div className="space-y-10">
       <section className="space-y-3">
