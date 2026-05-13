@@ -197,3 +197,33 @@ Skills: CSS,HTML,Javascript, Git, SQl, C++
 >What surprised me most was how many files had to change just to add authentication properly. It wasn’t only a login page — the root layout, sidebar, server actions, Supabase utilities, project pages, middleware, and route handling all needed updates so authentication state could flow consistently through the app.
 
 >Middleware-based auth feels much cleaner than checking login status inside every page component. Instead of repeating authentication logic across pages, the middleware protects routes globally before the page even loads. That makes the app easier to maintain and keeps unauthorized users from reaching protected routes at all, rather than redirecting them after rendering begins.
+
+## Activity 6: Deployment, Webhooks, & AI-Testing
+
+### Prompt 1
+
+**What I asked:**
+
+> Create Playwright end-to-end tests for the authentication flow. Use role-based locators and environment variables from .env.local. Add a shared sign-in helper and validate redirect behavior after login.
+
+**What happened:**
+
+> The AI agent inspected the existing project structure before generating the tests. It correctly identified the /login route and the redirect to /projects after successful authentication. It used role-based and label-based locators instead of brittle CSS selectors and generated a reusable sign-in helper. The first generated version did not fully pass because the app had two “Sign In” buttons, which caused Playwright to click the wrong control. The agent analyzed the real UI structure and adjusted the locator to target the actual submit button. After refining the selectors and sidebar assertions, all 3 Playwright tests passed successfully.
+
+### Prompt 2
+
+**What I asked:**
+
+> Fix the failing Playwright authentication test and improve selector reliability for duplicate labels and navigation assertions.
+
+**What happened:**
+
+> The AI agent debugged the failing test step-by-step by inspecting the rendered UI and replaying the login flow. It discovered duplicate accessible names in both the login form and sidebar breadcrumb navigation. The agent refined the locators to scope assertions more precisely and updated the navigation checks to avoid collisions. The process took several iterations of test execution and refinement before the tests passed cleanly. In the final run, all tests completed successfully with 3 passing tests.
+
+### Reflection
+
+> Having AI generate and run Playwright tests significantly increased my confidence before deploying the application. The AI caught issues I would likely have missed during manual browser testing, especially duplicate accessible labels and ambiguous UI elements that caused automated failures. Manual testing usually focuses on visual confirmation, while the AI-driven tests validated exact routes, redirects, selectors, and accessibility behavior consistently. The iterative debugging process also helped identify weaknesses in the UI structure that improved the overall quality of the application.
+
+### Course Reflection
+
+> Looking back at my prompts from Activity 1 through Activity 6, my prompting strategy became much more specific and structured. Early on, my prompts were short and vague, but over time I learned to include technical requirements, expected behaviors, file locations, environment variables, and testing expectations directly in the prompt. I also learned the importance of iterative prompting — instead of expecting perfect results immediately, I used follow-up prompts to refine outputs and debug issues. The most important thing I learned about working with AI coding tools is that clear context and precise instructions produce much better results, especially when debugging, testing, and deploying full-stack applications.
